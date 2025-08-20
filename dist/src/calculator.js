@@ -1,11 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-// import { createInterface } from 'node:readline';
-// import { stdin, stdout } from 'node:process';
-const readline_1 = __importDefault(require("readline"));
+const node_readline_1 = require("node:readline");
+const node_process_1 = require("node:process");
+// Basic math functions
 function add(a, b) {
     return a + b;
 }
@@ -21,14 +18,15 @@ function divide(a, b) {
     }
     return a / b;
 }
-const r1 = readline_1.default.createInterface({
-    input: process.stdin,
-    output: process.stdout
+const rl = (0, node_readline_1.createInterface)({
+    input: node_process_1.stdin,
+    output: node_process_1.stdout
 });
 console.log("Welcome to Basic Calculator\n");
 // State tracking
 let state = 'MENU';
 let operation = null;
+let exitRequested = false;
 function showMenu() {
     console.log("\n1. Add");
     console.log("2. Subtract");
@@ -86,7 +84,7 @@ function handleNumbers(input) {
         if (isNaN(a) || isNaN(b)) {
             throw new Error("Both values must be valid numbers");
         }
-        if (operation === null) {
+        if (!operation) {
             throw new Error("No operation selected");
         }
         const result = operation(a, b);
@@ -103,6 +101,8 @@ function handleNumbers(input) {
     }
 }
 rl.on('line', (input) => {
+    if (exitRequested)
+        return;
     try {
         const trimmedInput = input.trim();
         switch (state) {
@@ -124,8 +124,14 @@ rl.on('line', (input) => {
 });
 // Handle graceful shutdown
 rl.on('close', () => {
-    console.log("\nCalculator session ended.");
-    process.exit(0);
+    if (!exitRequested) {
+        console.log("\nCalculator session ended unexpectedly");
+        process.exit(1);
+    }
+});
+process.on('SIGINT', () => {
+    exitRequested = true;
+    handleExit();
 });
 // Start the calculator
 showMenu();

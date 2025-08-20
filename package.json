@@ -4,15 +4,17 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start":"node dist/calculator.js",
-    "exec" : "node ./dist/index.js",
+    "start": "node ./dist/src/calculator.js",
+    "exec": "node ./dist/index.js",
     "dev": "ts-node ./src/calculator.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
-  "dependencies": {
-    "typescript": "^5.8.3"
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }

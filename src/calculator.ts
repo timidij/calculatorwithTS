@@ -1,39 +1,39 @@
-// import { createInterface } from 'node:readline';
-// import { stdin, stdout } from 'node:process';
-import readline from 'readline';
+import { createInterface } from 'node:readline';
+import { stdin, stdout } from 'node:process';
 
-
-function add(a: number, b: number) {
+// Basic math functions
+function add(a: number, b: number): number {
     return a + b;
 }
 
-function subtract(a: number, b: number) {
+function subtract(a: number, b: number): number {
     return a - b;
 }
 
-function multiply(a: number, b: number) {
+function multiply(a: number, b: number): number {
     return a * b;
 }
 
-function divide(a: number, b: number) {
+function divide(a: number, b: number): number {
     if (b === 0) {
         throw new Error("Division by zero is not allowed");
     }
     return a / b;
 }
 
-const r1:readline.Interface = readline.createInterface({
-    input:process.stdin,
-    output:process.stdout
-})
+const rl = createInterface({
+    input: stdin,
+    output: stdout
+});
 
 console.log("Welcome to Basic Calculator\n");
 
 // State tracking
-let state: string = 'MENU';
+let state: 'MENU' | 'NUMBERS' = 'MENU';
 let operation: ((a: number, b: number) => number) | null = null;
+let exitRequested = false;
 
-function showMenu():void {
+function showMenu(): void {
     console.log("\n1. Add");
     console.log("2. Subtract");
     console.log("3. Multiply");
@@ -42,13 +42,13 @@ function showMenu():void {
     console.log("Enter choice (1-5):");
 }
 
-function handleExit():void {
+function handleExit(): void {
     console.log("\nThank you for using Basic Calculator. Goodbye!");
     rl.close();
     process.exit(0);
 }
 
-function handleMenu(choice: string):void {
+function handleMenu(choice: string): void {
     try {
         switch (choice) {
             case '1':
@@ -76,32 +76,32 @@ function handleMenu(choice: string):void {
         
         state = 'NUMBERS';
         console.log("Enter two numbers separated by comma (e.g., '5,3'):");
-    } catch (error:Error) {
+    } catch (error) {
         console.error(`\nError: ${error.message}`);
         showMenu();
     }
 }
 
-function handleNumbers(input: string):void {
+function handleNumbers(input: string): void {
     try {
-        const parts: Array<string> = input.split(',');
+        const parts = input.split(',');
         
         if (parts.length !== 2) {
             throw new Error("Please enter exactly two numbers separated by comma");
         }
         
-        const a: number = parseFloat(parts[0]);
-        const b: number = parseFloat(parts[1]);
+        const a = parseFloat(parts[0]);
+        const b = parseFloat(parts[1]);
         
         if (isNaN(a) || isNaN(b)) {
             throw new Error("Both values must be valid numbers");
         }
         
-        if (operation === null) {
+        if (!operation) {
             throw new Error("No operation selected");
         }
         
-        const result: number = operation(a, b);
+        const result = operation(a, b);
         console.log(`\nResult: ${result}`);
         
     } catch (error) {
@@ -115,6 +115,8 @@ function handleNumbers(input: string):void {
 }
 
 rl.on('line', (input: string) => {
+    if (exitRequested) return;
+    
     try {
         const trimmedInput = input.trim();
         
@@ -137,8 +139,15 @@ rl.on('line', (input: string) => {
 
 // Handle graceful shutdown
 rl.on('close', () => {
-    console.log("\nCalculator session ended.");
-    process.exit(0);
+    if (!exitRequested) {
+        console.log("\nCalculator session ended unexpectedly");
+        process.exit(1);
+    }
+});
+
+process.on('SIGINT', () => {
+    exitRequested = true;
+    handleExit();
 });
 
 // Start the calculator
