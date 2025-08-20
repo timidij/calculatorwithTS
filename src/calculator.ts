@@ -77,7 +77,7 @@ function handleMenu(choice: string): void {
         state = 'NUMBERS';
         console.log("Enter two numbers separated by comma (e.g., '5,3'):");
     } catch (error) {
-        console.error(`\nError: ${error.message}`);
+        console.error(`\nError: ${error}`);
         showMenu();
     }
 }
@@ -90,8 +90,8 @@ function handleNumbers(input: string): void {
             throw new Error("Please enter exactly two numbers separated by comma");
         }
         
-        const a = parseFloat(parts[0]);
-        const b = parseFloat(parts[1]);
+        const a:number = parseFloat(parts[0]);
+        const b:number = parseFloat(parts[1]);
         
         if (isNaN(a) || isNaN(b)) {
             throw new Error("Both values must be valid numbers");
@@ -105,7 +105,7 @@ function handleNumbers(input: string): void {
         console.log(`\nResult: ${result}`);
         
     } catch (error) {
-        console.error(`\nCalculation Error: ${error.message}`);
+        console.error(`\nCalculation Error: ${error}`);
     } finally {
         // Reset for next operation
         state = 'MENU';
@@ -129,7 +129,7 @@ rl.on('line', (input: string) => {
                 break;
         }
     } catch (error) {
-        console.error(`\nUnexpected Error: ${error.message}`);
+        console.error(`\nUnexpected Error: ${error}`);
         console.log("Restarting calculator...");
         state = 'MENU';
         operation = null;
