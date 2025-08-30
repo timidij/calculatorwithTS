@@ -3,12 +3,12 @@
 //     age:number
 // }
 interface aven {
-    name:string
-    age: number
+    name: string;
+    age: number;
 }
-const userDetail:aven = {
-    name:"Odubo",
-    age:25
-}
+const userDetail: aven = {
+    name: "Odubo",
+    age: 25,
+};
 
-console.log(userDetail)
+console.log(userDetail);

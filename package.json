@@ -5,16 +5,26 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/src/calculator.js",
-    "exec": "node ./dist/index.js",
-    "dev": "ts-node ./src/calculator.ts"
+    "exec": "node ./dist/src/calculator.js",
+    "dev": "ts-node ./src/calculator.ts",
+    "lint": "eslint ./src --ext, ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@eslint/js": "^9.34.0",
     "@types/node": "^24.3.0",
+    "eslint": "^9.34.0",
+    "globals": "^16.3.0",
+    "husky": "^9.1.7",
+    "prettier": "3.6.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.41.0"
   }
 }

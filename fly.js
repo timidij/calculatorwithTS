@@ -1,13 +1,13 @@
-class user{
-    constructor(name,dept){
-        this.name = name
-        this.dept = dept
+class user {
+    constructor(name, dept) {
+        this.name = name;
+        this.dept = dept;
     }
 
-    detail (){
-        return this.name + " " + this.dept
+    detail() {
+        return this.name + " " + this.dept;
     }
 }
 
-let newUser = new user("James", "CSI")
-console.log(newUser.detail())
+let newUser = new user("James", "CSI");
+console.log(newUser.detail());
