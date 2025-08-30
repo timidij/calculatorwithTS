@@ -6,6 +6,8 @@ function add(a: number, b: number): number {
     return a + b;
 }
 
+
+
 function subtract(a: number, b: number): number {
     return a - b;
 }
@@ -53,18 +55,22 @@ function handleMenu(choice: string): void {
         switch (choice) {
             case '1':
                 operation = add;
+                menu = "+"
                 console.log("\nAddition selected");
                 break;
             case '2':
                 operation = subtract;
                 console.log("\nSubtraction selected");
+                menu= "-"
                 break;
             case '3':
                 operation = multiply;
+                menu= "*"
                 console.log("\nMultiplication selected");
                 break;
             case '4':
                 operation = divide;
+                menu= "/"
                 console.log("\nDivision selected");
                 break;
             case '5':
@@ -82,6 +88,18 @@ function handleMenu(choice: string): void {
     }
 }
 
+// function validateNumber(input:string):number|null{
+
+// }
+interface CalculationHistory{
+    operation1:string;
+    operand1:number;
+    operand2:number;
+    result:number;
+}
+
+let history:CalculationHistory[]= []
+let menu: string;
 function handleNumbers(input: string): void {
     try {
         const parts = input.split(',');
@@ -103,6 +121,18 @@ function handleNumbers(input: string): void {
         
         const result = operation(a, b);
         console.log(`\nResult: ${result}`);
+        let value:CalculationHistory = {
+    operand1: a,
+    operation1:menu,
+    operand2:b,
+    result:result
+
+}
+
+history.push(value)
+    console.log(value)
+    console.log(history)
+        
         
     } catch (error) {
         console.error(`\nCalculation Error: ${error}`);
@@ -123,6 +153,8 @@ rl.on('line', (input: string) => {
         switch (state) {
             case 'MENU':
                 handleMenu(trimmedInput);
+                
+
                 break;
             case 'NUMBERS':
                 handleNumbers(trimmedInput);
