@@ -2,11 +2,12 @@ name: Code quality Checks
 on:
 push:
     branches:
-        - dev
+        - main
     pull_request:
         branches:
             - main
 jobs:
+  lint-format-build:
     runs-on: ubuntu-latest
     steps:
         - name: Checkout Code
