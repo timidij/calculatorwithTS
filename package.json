@@ -7,7 +7,7 @@
         "start": "node ./dist/src/calculator.js",
         "exec": "node ./dist/src/calculator.js",
         "dev": "ts-node ./src/calculator.ts",
-        "lint": "eslint ./src --ext, ts",
+        "lint": "eslint ./src --ext .ts",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "prepare": "husky"
