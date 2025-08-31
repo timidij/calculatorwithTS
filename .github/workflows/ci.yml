@@ -18,6 +18,13 @@ jobs:
                   node-version: "22"
             - name: Install dependencies
               run: npm install
+            - name: Husky install
+              run: npx husky install
+            - name: Make husky hooks executable
+              run: |
+                  if [ -d .husky ]; then
+                    chmod +x .husky/*
+                  fi
             - name: Format Code
               run: npm run format
             - name: Lint Code
