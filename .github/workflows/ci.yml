@@ -7,21 +7,21 @@ push:
         branches:
             - main
 jobs:
-  lint-format-build:
-    runs-on: ubuntu-latest
-    steps:
-        - name: Checkout Code
-          uses: actions/checkout@v2
-        - name: Set up Node.jobs
-          uses: actions/setup-node@v2
-          with:
-              node-version: "22"
+    lint-format-build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v2
+            - name: Set up Node.jobs
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "22"
 
-        - name: Install dependencies
-          run: npm Install
-        - name: Format Code
-          run: npm run Format
-        - name: Lint Code
-          run: npm run Lint
-        - name: Build Project
-          run: npm run build
+            - name: Install dependencies
+              run: npm Install
+            - name: Format Code
+              run: npm run Format
+            - name: Lint Code
+              run: npm run Lint
+            - name: Build Project
+              run: npm run build
