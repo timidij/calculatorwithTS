@@ -71,7 +71,8 @@ function handleMenu(choice) {
         }
         state = "NUMBERS";
         console.log("Enter two numbers separated by comma (e.g., '5,3'):");
-    } catch (error) {
+    }
+    catch (error) {
         console.error(`\nError: ${error}`);
         showMenu();
     }
@@ -103,9 +104,11 @@ function handleNumbers(input) {
         history.push(value);
         console.log(value);
         console.log(history);
-    } catch (error) {
+    }
+    catch (error) {
         console.error(`\nCalculation Error: ${error}`);
-    } finally {
+    }
+    finally {
         // Reset for next operation
         state = "MENU";
         operation = null;
@@ -113,7 +116,8 @@ function handleNumbers(input) {
     }
 }
 rl.on("line", (input) => {
-    if (exitRequested) return;
+    if (exitRequested)
+        return;
     try {
         const trimmedInput = input.trim();
         switch (state) {
@@ -124,7 +128,8 @@ rl.on("line", (input) => {
                 handleNumbers(trimmedInput);
                 break;
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error(`\nUnexpected Error: ${error}`);
         console.log("Restarting calculator...");
         state = "MENU";
